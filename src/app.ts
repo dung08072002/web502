@@ -11,8 +11,6 @@ const products: Product[] = [
     { id: 3, name: "proC" },
 ]
 
-
-
 function showProduct<T extends Product[]>(products :T) {
     const result = products.map(item => `
         <h1>${item.name}</h1>
