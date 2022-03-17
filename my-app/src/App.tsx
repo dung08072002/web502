@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react'
-import logo from './logo.svg'
+import { Routes, Route, NavLink, Navigate } from 'react-router-dom'
 import './App.css'
-import { Routes, Route, NavLink } from 'react-router-dom'
 import ShowInfo from './components/ShowInfo'
 import Product from './components/Product'
 import { list, remove } from './api/product'
 import { IProduct } from './types/product'
+import Home from './pages/Home'
+import WebsiteLayout from './pages/layouts/WebsiteLayout'
+import AdminLayout from './pages/layouts/AdminLayout'
+import Dashboard from './pages/Dashboard'
+import ProductManage from './pages/layouts/ProductManage'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
@@ -19,37 +22,43 @@ function App() {
     getProducts()
   }, [])
 
-  const removeItem = (id: number) => {
-    remove(id);
-    setProducts(products.filter(item => item._id !== id));
-  }
+  // const removeItem = (id: number) => {
+  //   remove(id);
+  //   setProducts(products.filter(item => item._id !== id));
+  // }
 
   return (
     <div className="App">
-      {products.map(item => {
-        return <div>{item.name} <button onClick={() => removeItem(item._id)}>Remove</button></div>
-      })}
-
       <header>
-        <ul>
+        <ul className="list-group">
           <li>
             <NavLink to="/">Home Page</NavLink>
           </li>
           <li>
-            <NavLink to="/product">Home Page</NavLink>
+            <NavLink to="/product">Product Page</NavLink>
           </li>
           <li>
-            <NavLink to="/about">Home Page</NavLink>
+            <NavLink to="/about">About me</NavLink>
           </li>
         </ul>
       </header>
+
       <main>
         <Routes>
-          <Route path="/" element={<h1>Home Page</h1>} />
-          <Route path="/product" element={products.map(item => <div>{item.name}</div>)} />
-          <Route path="/about" element={<ShowInfo name="DUNGNV" age={19}/>} />
+          <Route path="/" element={<WebsiteLayout />}>
+            <Route index element={<Home />}/>
+            <Route path="product" element={<h1>Product Page</h1>}/>
+            <Route path="About" element={<ShowInfo name="DUNG" age={19}/>}/>
+          </Route>
+          
+          <Route path="admin" element={<AdminLayout />}>
+            <Route index element={<Navigate to="dashboard" />} />
+            <Route path="dashboard" element={<Dashboard />}/>
+            <Route path="products" element={<ProductManage />}/>
+          </Route>
         </Routes>
       </main>
+
     </div>
   )
 }
