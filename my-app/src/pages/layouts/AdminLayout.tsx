@@ -5,9 +5,9 @@ import SidebarAdmin from '../../components/SidebarAdmin'
 const AdminLayout = () => {
   return (
     <div>
+            <SidebarAdmin/>
         <main>
             <Outlet/>
-            <SidebarAdmin/>
         </main>
     </div>
   )
