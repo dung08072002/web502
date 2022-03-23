@@ -1,4 +1,5 @@
-export interface IProduct{
-    _id: string, 
-    name: string
+export type IProduct = {
+    _id?: string, 
+    name: string,
+    price: number
 }

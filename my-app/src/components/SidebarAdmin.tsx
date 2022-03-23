@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 const SidebarAdmin = () => {
   return (
     <div>SidebarAdmin
-        <ul>
+        <ul className='list-group'>
             <li>
                 <NavLink to="dashboard">Dashboard</NavLink>
             </li>
