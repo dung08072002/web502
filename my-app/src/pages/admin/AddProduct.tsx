@@ -22,7 +22,7 @@ const AddProduct = (props : AddProductProps) => {
         <div>AddProduct
             <NavLink to="/admin/products">Back to list</NavLink>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input type="text" placeholder='product name' {...register('name')} />
+                <input type="text" placeholder='product name' {...register('name', {required: true})} />
                 <input type="number" placeholder='product price' {...register('price')} />
                 <textarea></textarea>
                 <button>Add</button>

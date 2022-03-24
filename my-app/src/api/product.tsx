@@ -20,3 +20,8 @@ export const add = (product: IProduct) => {
     const url = "/products";
     return instance.post(url, product);
 }
+
+export const edit = (product: IProduct) => {
+    const url = `/products/${product.id}`;
+    return instance.put(url, product);
+}

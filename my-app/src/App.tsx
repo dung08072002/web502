@@ -6,7 +6,7 @@ import axios from 'axios'
 import ShowInfo from './components/ShowInfo'
 import Product from './components/Product'
 //API
-import { add, list, remove } from './api/product'
+import { add, edit, list, remove } from './api/product'
 //Types
 import type { IProduct } from './types/product'
 //Pages
@@ -18,6 +18,7 @@ import AddProduct from './pages/admin/AddProduct'
 //Pages - Layout
 import WebsiteLayout from './pages/layouts/WebsiteLayout'
 import AdminLayout from './pages/layouts/AdminLayout'
+import EditProduct from './pages/admin/EditProduct'
 
 function App() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -32,12 +33,17 @@ function App() {
 
   const removeItem = (id: string) => {
     remove(id);
-    setProducts(products.filter(item => item._id !== id));
+    setProducts(products.filter(item => item.id !== id));
   }
 
   const onHandleAdd = async (product: IProduct) => {
-    const {data} = await add(product);
+    const { data } = await add(product);
     setProducts([...products, data]);
+  }
+
+  const onHandleUpdate = async (product: IProduct) => {
+    const { data } = await edit(product);
+    setProducts(products.map(item => item.id == data.id ? data : item));
   }
 
   return (
@@ -54,13 +60,14 @@ function App() {
             </Route>
             <Route path="About" element={<ShowInfo name="DUNG" age={19} />} />
           </Route>
-          
+
           <Route path="admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="products" >
-              <Route index element={<ProductManage products={products} onRemove={removeItem}/>}/>
-              <Route path="add" element={<AddProduct onAdd={onHandleAdd} />}/>
+              <Route index element={<ProductManage products={products} onRemove={removeItem} />} />
+              <Route path="add" element={<AddProduct onAdd={onHandleAdd} />} />
+              <Route path=":id/edit" element={<EditProduct onUpdate={onHandleUpdate} />} />
             </Route>
           </Route>
         </Routes>

@@ -11,7 +11,6 @@ const DetailProduct = () => {
     useEffect(() => { //Call api
         const getProduct = async () => {
             const { data } = await read(id);
-            console.log('data', data)
             setProduct(data);
         }
         getProduct();

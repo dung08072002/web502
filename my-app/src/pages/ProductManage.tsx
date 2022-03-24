@@ -1,10 +1,10 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { IProduct } from '../types/product'
 
 type ProductManageProps = {
   products: IProduct[];
-  onRemove: (id : string) => void
+  onRemove: (id: string) => void
 }
 
 const ProductManage = (props: ProductManageProps) => {
@@ -19,13 +19,16 @@ const ProductManage = (props: ProductManageProps) => {
           <th>Action</th>
         </thead>
         <tbody>
-          {props.products.map((item,index) => {
+          {props.products.map((item, index) => {
             return <tr key={index}>
-              <td>{index+1}</td>
+              <td>{index + 1}</td>
               <td>{item.name}</td>
               <td>{item.price}</td>
               <td>
-                <button onClick={() => props.onRemove(item._id)}>Remove</button>
+                <button onClick={() => props.onRemove(item.id)}>Remove</button>
+              </td>
+              <td>
+                <Link to={`/admin/products/${item.id}/edit`}>Edit</Link>
               </td>
             </tr>
           })}
