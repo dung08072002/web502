@@ -1,9 +1,38 @@
 {
   "products": [
     {
-      "name": "Product A updated",
+      "name": "Product A updated 1",
       "price": "120391023",
       "id": 1
+    }
+  ],
+  "users": [
+    {
+      "email": "dungnvph17931@fpt.edu.vn",
+      "password": "$2a$10$78StlbMaHeKhOUtOw1rO/uy9EvkPLhyR9GQXUolXY0Fn./BxYrgqS",
+      "name": "dungnvph17931",
+      "role": "1",
+      "id": 1
+    },
+    {
+      "email": "dungbap.87@fpt.edu.vn",
+      "password": "$2a$10$FUSgDHK58f5URon/N9KOqOeUu0zbem3g15cMYObDoEdB5g1IwIEV2",
+      "name": "dungnvph17931",
+      "role": "0",
+      "id": 2
+    },
+    {
+      "email": "dungngo@gmail.com",
+      "password": "$2a$10$fx3gCb1htBiPGv.i52yneesx0CSiT0PPUpe7PKqFwPlpVxwr1TqcO",
+      "name": "dunngngo",
+      "id": 3
+    },
+    {
+      "email": "dungviet@gmail.com",
+      "password": "$2a$10$JksqQXB14pWKLUT.bImWH.VFCsWymAiHgoBPi66XGZq1sZ6FYWWOK",
+      "name": "dungviet",
+      "id": 4,
+      "role": 0
     }
   ]
 }
