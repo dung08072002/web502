@@ -21,6 +21,7 @@ const EditProduct = (props: EditProductProps) => {
     useEffect(() => {
         const getProduct = async () => {
             const { data } = await read(id);
+            console.log(data);
             reset(data);
         }
         getProduct();

@@ -6,9 +6,6 @@ const AdminLayout = () => {
   return (
     <div>
             <SidebarAdmin/>
-        <main>
-            <Outlet/>
-        </main>
     </div>
   )
 }

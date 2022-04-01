@@ -22,6 +22,6 @@ export const add = (product: IProduct) => {
 }
 
 export const edit = (product: IProduct) => {
-    const url = `/products/${product.id}`;
+    const url = `/products/${product._id}`;
     return instance.put(url, product);
 }

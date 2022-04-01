@@ -1,5 +1,8 @@
 export type IProduct = {
-    id?: string, 
+    _id?: string, 
     name: string,
-    price: number
+    price: number,
+    slug?: string,
+    image?: string,
+    category?: string
 }
