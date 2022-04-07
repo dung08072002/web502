@@ -35,7 +35,6 @@ const EditProduct = (props: EditProductProps) => {
 
     return (
         <div>EditProduct
-            <NavLink to="/admin/products">Back to list</NavLink>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <input type="text" {...register('name', { required: true })} />
                 <input type="number" {...register('price', { required: true })} />

@@ -5,7 +5,7 @@ import ShowInfo from './components/ShowInfo'
 import Product from './components/Product'
 //API
 import { add, edit, list, remove } from './api/product'
-import { listCate } from './api/category'
+import { listCate, removeCate } from './api/category'
 //Types
 import type { IProduct } from './types/product'
 import type { TypeUser } from './types/user'
@@ -17,6 +17,9 @@ import Dashboard from './pages/Dashboard'
 import ProductManage from './pages/admin/ProductManage'
 import AddProduct from './pages/admin/AddProduct'
 import EditProduct from './pages/admin/EditProduct'
+import CategoryManager from './pages/admin/CategoryManager'
+import AddCategory from './pages/admin/AddCategory'
+import EditCategory from './pages/admin/EditCategory'
 import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 //Pages - Layout
@@ -41,11 +44,16 @@ function App() {
       setCategories(data);
     }
     getCategories()
-  },[])
+  }, [])
 
   const removeItem = (id: string) => {
     remove(id);
     setProducts(products.filter(item => item._id !== id));
+  }
+
+  const removeCate = (slug: string) => {
+    removeCate(slug)
+    setProducts(products.filter(item => item.slug !== slug));
   }
 
   const onHandleAdd = async (product: IProduct) => {
@@ -59,7 +67,7 @@ function App() {
   }
 
   const buttonLogOut = document.querySelector("#btn-log-out");
-  if(buttonLogOut){
+  if (buttonLogOut) {
     buttonLogOut.addEventListener("click", () => {
       localStorage.removeItem("user");
     })
@@ -88,6 +96,11 @@ function App() {
               <Route index element={<ProductManage category={categories} products={products} onRemove={removeItem} />} />
               <Route path="add" element={<AddProduct category={categories} onAdd={onHandleAdd} />} />
               <Route path=":id/edit" element={<EditProduct onUpdate={onHandleUpdate} />} />
+            </Route>
+            <Route path='categories'>
+              <Route index element={<CategoryManager category={categories} onRemoveCate={removeCate} />} />
+              <Route path='add' element={<AddCategory />} />
+              <Route path=':id/edit' element={<EditCategory />} />
             </Route>
           </Route>
         </Routes>

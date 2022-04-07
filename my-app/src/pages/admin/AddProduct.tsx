@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { TypeCategory } from '../../types/category';
+import { Image } from 'antd';
+import { Select } from 'antd';
+
+const { Option } = Select;
 
 
 type AddProductProps = {
@@ -16,6 +20,25 @@ type TypeInput = {
 }
 
 const AddProduct = (props: AddProductProps) => {
+    const [selectedImage, setSelectedImage] = useState();
+    const imageChange = (e: any) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setSelectedImage(e.target.files[0]);
+        }
+    };
+    const removeSelectedImage = () => {
+        setSelectedImage();
+    };
+
+    function onChange(value : any) {
+        console.log(`selected ${value}`);
+    }
+
+    function onSearch(val: any) {
+        console.log('search:', val);
+    }
+
+
     const navigate = useNavigate();
     const cloud_name = "assigmentjsweb501";
     const upload_preset = "lwllsryx";
@@ -41,21 +64,54 @@ const AddProduct = (props: AddProductProps) => {
             .catch((err) => console.log(err));
     }
     return (
-        <div>
+        <div className='form-style'>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input type="text" placeholder='product name' {...register('name', { required: true })} />
-                <input type="number" placeholder='product price' {...register('price')} />
-                <input type="file" {...register('image')} className="app_uploadInput" />
-                <select {...register('category')}>
-                    <option selected defaultValue={0} disabled>Chon danh muc</option>
-                    {
-                        props.category.map(item => {
-                            return <option value={item._id}>{item.name}</option>
-                        })
-                    }
-                </select>
-                <button>Add</button>
+                <label className='item-form' htmlFor="">
+                    <p>product name</p>
+                    <input type="text" autoComplete='off' {...register('name', { required: true })} />
+                </label>
+                <label className='item-form' htmlFor="">
+                    <p>product price</p>
+                    <input type="number" autoComplete='off' {...register('price')} />
+                </label>
+                <label className='item-form' htmlFor="">
+                    <p>product image</p>
+                    <input type="file" accept='image/*'
+                        {...register('image')} className="app_uploadInput" onChange={imageChange} />
+                </label>
+                <label className='item-form' htmlFor="">
+                    <p>category</p>
+
+                    <Select
+                        showSearch
+                        placeholder="Select category"
+                        optionFilterProp="children"
+                        onChange={onChange}
+                        onSearch={onSearch}
+                        filterOption={(input, option : any) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                        {...register('category')}
+                    >
+                        {
+                            props.category.map(item => {
+                                return <Option value={item._id}>{item.name}</Option>
+                            })
+                        }
+                    </Select>
+                </label>
+                <button className='item-form'>Add</button>
             </form>
+            <div className='previewImage'>
+                {selectedImage && (
+                    <Image.PreviewGroup>
+                        <Image id='pic' width={200} src={URL.createObjectURL(selectedImage)} alt='thumb' />
+                        <button onClick={removeSelectedImage}>
+                            Remove This Image
+                        </button>
+                    </Image.PreviewGroup>
+                )}
+            </div>
         </div>
 
     )

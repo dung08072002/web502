@@ -1,3 +1,4 @@
+import { TypeCategory } from "../types/category";
 import instance from "./instance";
 
 export const listCate = () => {
@@ -5,7 +6,17 @@ export const listCate = () => {
     return instance.get(url)
 }
 
-export const oneCate = () => {
-    const url = "/category/:id";
+export const oneCate = (slug: string) => {
+    const url = `/category/${slug}`;
     return instance.get(url)
+}
+
+export const removeCate = (slug : string ) => {
+    const url = `/category/${slug}`;  
+    return instance.delete(url);
+}
+
+export const editCate = (categories : TypeCategory) => {
+    const url = `/category/${categories.slug}`;
+    return instance.put(url, categories)
 }

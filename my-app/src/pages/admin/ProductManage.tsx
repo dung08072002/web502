@@ -4,6 +4,7 @@ import { IProduct } from '../../types/product'
 import { Table, Tag, Space } from 'antd';
 import { TypeCategory } from '../../types/category';
 import { listCate } from '../../api/category';
+import { Button, Menu, Dropdown } from 'antd';
 
 type ProductManageProps = {
   products: IProduct[];
@@ -45,9 +46,6 @@ const columns = [
 ]
 
 const ProductManage = (props: ProductManageProps) => {
-  useEffect(() => {
-    const getCategory = 
-  }, [])
   const dataSource = props.products.map((item, index) => {
     return {
       key: index + 1,
@@ -55,8 +53,15 @@ const ProductManage = (props: ProductManageProps) => {
       name: item.name,
       image: <div><img src={item.image} width={100} alt="" /></div>,
       price: item.price,
-      category: item.category,
-      action: <div><button onClick={() => props.onRemove(item._id)}>Delete</button><button><Link to={`/admin/products/${item.slug}/edit`}>Edit</Link></button></div>
+      category: props.category.map((nameCate) => {
+        if(nameCate._id == item.category){
+          return nameCate.name;
+        }
+      }),
+      action: <div>
+        <Button className='button-action' onClick={() => props.onRemove(item._id)} type="primary" danger size='large'>Delete</Button>
+        <Button className='button-action' type="primary" size='large'><Link to={`/admin/products/${item.slug}/edit`}>Edit</Link></Button>
+      </div>
     }
   })
 
