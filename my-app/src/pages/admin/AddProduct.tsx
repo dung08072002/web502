@@ -3,10 +3,6 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { TypeCategory } from '../../types/category';
 import { Image } from 'antd';
-import { Select } from 'antd';
-
-const { Option } = Select;
-
 
 type AddProductProps = {
     onAdd: (product: TypeInput) => void
@@ -26,19 +22,6 @@ const AddProduct = (props: AddProductProps) => {
             setSelectedImage(e.target.files[0]);
         }
     };
-    const removeSelectedImage = () => {
-        setSelectedImage();
-    };
-
-    function onChange(value : any) {
-        console.log(`selected ${value}`);
-    }
-
-    function onSearch(val: any) {
-        console.log('search:', val);
-    }
-
-
     const navigate = useNavigate();
     const cloud_name = "assigmentjsweb501";
     const upload_preset = "lwllsryx";
@@ -66,52 +49,33 @@ const AddProduct = (props: AddProductProps) => {
     return (
         <div className='form-style'>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <label className='item-form' htmlFor="">
-                    <p>product name</p>
-                    <input type="text" autoComplete='off' {...register('name', { required: true })} />
-                </label>
-                <label className='item-form' htmlFor="">
-                    <p>product price</p>
-                    <input type="number" autoComplete='off' {...register('price')} />
-                </label>
-                <label className='item-form' htmlFor="">
-                    <p>product image</p>
-                    <input type="file" accept='image/*'
-                        {...register('image')} className="app_uploadInput" onChange={imageChange} />
-                </label>
-                <label className='item-form' htmlFor="">
-                    <p>category</p>
-
-                    <Select
-                        showSearch
-                        placeholder="Select category"
-                        optionFilterProp="children"
-                        onChange={onChange}
-                        onSearch={onSearch}
-                        filterOption={(input, option : any) =>
-                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-                        {...register('category')}
-                    >
-                        {
-                            props.category.map(item => {
-                                return <Option value={item._id}>{item.name}</Option>
-                            })
-                        }
-                    </Select>
-                </label>
-                <button className='item-form'>Add</button>
+                <label className='item-form form-label text-uppercase fw-bold' htmlFor="">name product</label>
+                <input type="text" autoComplete='off' className='form-control' {...register('name', { required: true })} />
+                <label className='item-form form-label text-uppercase fw-bold' htmlFor="">price product</label>
+                <input type="number" autoComplete='off' className='form-control' {...register('price', { required: true })} />
+                <label className='item-form form-label text-uppercase fw-bold' htmlFor="">image product</label>
+                <input type="file" accept='image/*'
+                    {...register('image')} className="app_uploadInput form-control" onChange={imageChange} />
+                <div className='previewImage'>
+                    {selectedImage && (
+                        <Image.PreviewGroup>
+                            <Image id='pic' width={200} src={URL.createObjectURL(selectedImage)} alt='thumb' />
+                        </Image.PreviewGroup>
+                    )}
+                </div>
+                <label className='item-form form-label text-uppercase fw-bold' htmlFor="">description product</label>
+                <textarea className='form-control' {...register('price')}></textarea>
+                <label className='item-form form-label text-uppercase fw-bold' htmlFor="">Select category</label>
+                <select className='form-control' {...register('category', { required: true })}>
+                    <option defaultValue={0} disabled selected className='text-uppercase'>SELECT CATEGORY</option>
+                    {
+                        props.category.map(item => {
+                            return <option value={item._id}>{item.name}</option>
+                        })
+                    }
+                </select>
+                <button className='item-form btn btn-primary my-4 text-uppercase'>Add product</button>
             </form>
-            <div className='previewImage'>
-                {selectedImage && (
-                    <Image.PreviewGroup>
-                        <Image id='pic' width={200} src={URL.createObjectURL(selectedImage)} alt='thumb' />
-                        <button onClick={removeSelectedImage}>
-                            Remove This Image
-                        </button>
-                    </Image.PreviewGroup>
-                )}
-            </div>
         </div>
 
     )

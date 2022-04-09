@@ -5,7 +5,7 @@ import ShowInfo from './components/ShowInfo'
 import Product from './components/Product'
 //API
 import { add, edit, list, remove } from './api/product'
-import { listCate, removeCate } from './api/category'
+import { addCate, editCate, listCate, removeCate } from './api/category'
 //Types
 import type { IProduct } from './types/product'
 import type { TypeUser } from './types/user'
@@ -61,9 +61,19 @@ function App() {
     setProducts([...products, data]);
   }
 
+  const onHandleAddCate = async (category : TypeCategory) => {
+    const { data } = await addCate(category);
+    setCategories([...categories, data]);
+  }
+
   const onHandleUpdate = async (product: IProduct) => {
     const { data } = await edit(product);
-    setProducts(products.map(item => item._id == data.id ? data : item));
+    setProducts(products.map(item => item.slug == data.slug ? data : item));
+  }
+
+  const onHanleUpdateCate = async(category : TypeCategory) => {
+    const { data } = await editCate(category);
+    setCategories(categories.map(item => item.slug == data.slug ? data : item))
   }
 
   const buttonLogOut = document.querySelector("#btn-log-out");
@@ -95,12 +105,12 @@ function App() {
             <Route path="products" >
               <Route index element={<ProductManage category={categories} products={products} onRemove={removeItem} />} />
               <Route path="add" element={<AddProduct category={categories} onAdd={onHandleAdd} />} />
-              <Route path=":id/edit" element={<EditProduct onUpdate={onHandleUpdate} />} />
+              <Route path=":slug/edit" element={<EditProduct category={categories} onUpdate={onHandleUpdate} />} />
             </Route>
             <Route path='categories'>
               <Route index element={<CategoryManager category={categories} onRemoveCate={removeCate} />} />
-              <Route path='add' element={<AddCategory />} />
-              <Route path=':id/edit' element={<EditCategory />} />
+              <Route path='add' element={<AddCategory onAddCate={onHandleAddCate} />} />
+              <Route path=':slug/edit' element={<EditCategory onUpdateCate={onHanleUpdateCate} />} />
             </Route>
           </Route>
         </Routes>
