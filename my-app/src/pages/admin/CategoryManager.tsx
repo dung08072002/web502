@@ -36,14 +36,13 @@ const CategoryManager = (props: CategoryManagerProps) => {
       number: index + 1,
       name: item.name,
       action: <div>
-        <Button className='button-action' onClick={() => props.onRemoveCate(item.slug)} type="primary" danger size='large'>Delete</Button>
         <Button className='button-action' type="primary" size='large'><Link to={`/admin/categories/${item.slug}/edit`}>Edit</Link></Button>
       </div>
     }
   })
   return (
     <div>
-      <Table columns={columns} dataSource={dataSource}/>
+      <Table className='text-start' columns={columns} dataSource={dataSource}/>
     </div>
   )
 }

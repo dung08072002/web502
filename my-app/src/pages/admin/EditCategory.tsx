@@ -19,13 +19,14 @@ const EditCategory = (props: EditCateProps) => {
   useEffect(() => {
     const getCate = async () => {
       const { data } = await oneCate(slug);
-      // console.log(data.category)
+      console.log(data)
       reset(data.category);
     }
     getCate();
   }, [])
   const onSubmit: SubmitHandler<TypeInput> = data => {
-    console.log(data);
+    // console.log(data);
+    // console.log(slug);
     props.onUpdateCate(data);
     navigate('/admin/categories')
   }

@@ -4,6 +4,9 @@ import { useNavigate, NavLink, useParams } from "react-router-dom"
 import { read } from '../../api/product'
 import { TypeCategory } from '../../types/category'
 import { IProduct } from '../../types/product'
+import { Image } from 'antd';
+import axios from 'axios'
+
 
 type EditProductProps = {
     onUpdate: (product: IProduct) => void
@@ -14,53 +17,54 @@ type TypeInput = {
     name: string,
     price: number,
     image: string,
+    description: string,
     category: string,
 }
 
 const EditProduct = (props: EditProductProps) => {
     const [selectedImage, setSelectedImage] = useState();
-    const [preview, setPreview] = useState<string>();
-    const imageChange = (e: any) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setSelectedImage(e.target.files[0]);
-        }
-    };
+    const [image, setImage] = useState<string>('')
+    
+    const imageLast = document.querySelector('#pic');
+    imageLast?.addEventListener('change', (e : any) => {
+        setImage(URL.createObjectURL(e.target?.files[0]))
+    })
+
     const navigate = useNavigate();
     const cloud_name = "assigmentjsweb501";
-    const upload_preset = "lwllsryx";
+    const CLOUDINARY_PRESET = "lwllsryx";
     const { register, handleSubmit, formState: { errors }, reset } = useForm<TypeInput>();
-    const { id } = useParams()
-
+    const { slug } = useParams()
+    // console.log(slug)
     useEffect(() => {
         const getProduct = async () => {
-            const { data } = await read(id);
-            console.log(data);
-            setPreview(data.image);
+            const { data } = await read(slug);
+            // console.log(data);
+            setImage(data.image);
             reset(data);
         }
         getProduct();
     }, []);
 
-    const onSubmit: SubmitHandler<TypeInput> = data => {
-        let imgUploadedLink = "";
-        const { files } = document.querySelector(".app_uploadInput");
-        if (files) {
-            const formData = new FormData();
-            formData.append("file", files);
-            formData.append("upload_preset", upload_preset);
-            const options = {
-                method: "POST",
-                body: formData,
-            };
-            return fetch(`https://api.Cloudinary.com/v1_1/${cloud_name}/image/upload`, options)
-                .then((res) => res.json())
-                .then((res) => {
-                    console.log(data);
-                    props.onUpdate(data);
-                    navigate("/admin/products");
-                })
-                .catch((err) => console.log(err));
+    const onSubmit: SubmitHandler<TypeInput> = async (data) => {
+        console.log(data);
+        const file = data.image[0];
+        if(data.image == image){
+            props.onUpdate(data);
         }
+        if(data.image != image){
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", CLOUDINARY_PRESET);
+
+            const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData, {
+                headers: {
+                    "Content-Type": "application/form-data",
+                }
+            })
+            props.onUpdate({...data, image: res.data.url})
+        }
+        navigate('/admin/products');
     }
     return (
         <div>
@@ -70,7 +74,12 @@ const EditProduct = (props: EditProductProps) => {
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">price product</label>
                 <input type="number" autoComplete='off' className='form-control' {...register('price', { required: true })} />
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">image product</label>
-                <input type="file" accept='image/*' {...register('image')} className="app_uploadInput form-control" onChange={imageChange} />
+                <input id='pic' type="file" accept='image/*' {...register('image')} className="app_uploadInput form-control" />
+                <div className='previewImage my-4'>
+                        <Image.PreviewGroup>
+                            <Image width={200} src={image} alt='thumb' />
+                        </Image.PreviewGroup>
+                </div>
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">Select category</label>
                 <select className='form-control' {...register('category', { required: true })}>
                     <option defaultValue={0} disabled selected className='text-uppercase'>SELECT CATEGORY</option>

@@ -12,6 +12,7 @@ type TypeInput = {
     name: string,
     price: number,
     image: string,
+    description: string,
     category: string,
 }
 
@@ -27,7 +28,7 @@ const AddProduct = (props: AddProductProps) => {
     const upload_preset = "lwllsryx";
     const { register, handleSubmit, formState: { errors } } = useForm<TypeInput>();
     const onSubmit: SubmitHandler<TypeInput> = data => {
-        const { files } = document.querySelector(".app_uploadInput");
+        const { files } : any = document.querySelector(".app_uploadInput");
         const formData = new FormData();
         formData.append("file", files[0]);
         formData.append("upload_preset", upload_preset);
@@ -56,7 +57,7 @@ const AddProduct = (props: AddProductProps) => {
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">image product</label>
                 <input type="file" accept='image/*'
                     {...register('image')} className="app_uploadInput form-control" onChange={imageChange} />
-                <div className='previewImage'>
+                <div className='previewImage my-4'>
                     {selectedImage && (
                         <Image.PreviewGroup>
                             <Image id='pic' width={200} src={URL.createObjectURL(selectedImage)} alt='thumb' />
@@ -64,7 +65,7 @@ const AddProduct = (props: AddProductProps) => {
                     )}
                 </div>
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">description product</label>
-                <textarea className='form-control' {...register('price')}></textarea>
+                <textarea className='form-control' {...register('description')}></textarea>
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">Select category</label>
                 <select className='form-control' {...register('category', { required: true })}>
                     <option defaultValue={0} disabled selected className='text-uppercase'>SELECT CATEGORY</option>

@@ -17,8 +17,8 @@ export const removeCate = (slug : string ) => {
 }
 
 export const editCate = (categories : TypeCategory) => {
-    const url = `/category/${categories.slug}`;
-    return instance.put(url, categories)
+    const url = `/categories/${categories.slug}/edit`;
+    return instance.patch(url, categories)
 }
 
 export const addCate = (categories : TypeCategory) => {

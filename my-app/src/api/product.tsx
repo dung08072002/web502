@@ -11,8 +11,13 @@ export const remove = (id: string) => {
     return instance.delete(url);
 }
 
-export const read = (id: string | undefined) => {
-    const url = `/products/${id}`;
+export const read = (slug: string | undefined) => {
+    const url = `/products/${slug}`;
+    return instance.get(url);
+}
+
+export const search = (input: string) =>{
+    const url = `/search?key=${input}`
     return instance.get(url);
 }
 
