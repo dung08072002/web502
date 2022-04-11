@@ -28,6 +28,7 @@ import AdminLayout from './pages/layouts/AdminLayout'
 //PrivateRouter
 import PrivateRouter from './pages/PrivateRouter'
 import SearchPages from './pages/SearchPages'
+import Cart from './pages/Cart'
 
 function App() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -98,7 +99,7 @@ function App() {
             <Route path="signin" element={<Signin />} />
             <Route path="signup" element={<Signup />} />
             <Route path="search" element={<SearchPages />} />
-            <Route path="About" element={<ShowInfo name="Dung" age={19} />} />
+            <Route path="cart" element={<Cart />} />
           </Route>
 
           <Route path="admin" element={<AdminLayout />}>

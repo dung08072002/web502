@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { signup } from '../api/user'
 import { TypeUser } from '../types/user'
 
@@ -23,13 +23,17 @@ const Signup = (props: SignUpProps) => {
     navigate('/signin')
   }
   return (
-    <div>Signup
+    <div className='container form-sign-in_up my-5'>
+      <h1>sign up</h1>
       <form onSubmit={handleSubmit(onSubmit)} action="">
-        <input type="text" placeholder='name' {...register('name', { required: true })} />
-        <input type="email" placeholder='email' {...register('email', { required: true })} />
-        <input type="password" placeholder='password' {...register('password', { required: true })} />
-        <button>Sign up</button>
+        <input className="form-control my-2" type="text" placeholder='Name' {...register('name', { required: true })} />
+        <input className="form-control my-2" type="email" placeholder='Email' {...register('email', { required: true })} />
+        <input className="form-control my-2" type="password" placeholder='Password' {...register('password', { required: true })} />
+        <button className="form-control btn-primary my-2 fw-bold">Sign up</button>
       </form>
+      <div className='other-option'>
+        <Link to="/signin">Already registered?</Link>
+      </div>
     </div>
   )
 }
