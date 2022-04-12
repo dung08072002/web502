@@ -7,7 +7,7 @@ type PrivateRouterProps = {
 
 const PrivateRouter = (props: PrivateRouterProps) => {
     if(localStorage.getItem("user")){
-        const role = JSON.parse(localStorage.getItem("user")).role;
+        const role = JSON.parse(localStorage.getItem("user") as any).role;
         if(role != 0){
             return <Navigate to="/" />
         }

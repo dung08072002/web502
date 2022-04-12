@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Routes, Route, NavLink, Navigate, useNavigate } from 'react-router-dom'
-//Components
-import ShowInfo from './components/ShowInfo'
-import Product from './components/Product'
 //API
 import { add, edit, list, remove } from './api/product'
 import { addCate, editCate, listCate, removeCate } from './api/category'
@@ -29,6 +26,8 @@ import AdminLayout from './pages/layouts/AdminLayout'
 import PrivateRouter from './pages/PrivateRouter'
 import SearchPages from './pages/SearchPages'
 import Cart from './pages/Cart'
+import Product from './pages/Product'
+import DetailCate from './pages/DetailCate'
 
 function App() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -91,10 +90,11 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<WebsiteLayout />}>
-            <Route index element={<Home />} />
+            <Route index element={<Home products={products} />} />
             <Route path="product">
-              <Route index element={<h1>Product Page</h1>} />
-              <Route path=":id" element={<DetailProduct />} />
+              <Route index element={<Product products={products} />} />
+              <Route path=":slug" element={<DetailProduct />} />
+              <Route path="category/:slug" element={<DetailCate />} />
             </Route>
             <Route path="signin" element={<Signin />} />
             <Route path="signup" element={<Signup />} />

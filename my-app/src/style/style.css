@@ -4,6 +4,11 @@
 
 * {
   font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+ul {
+  padding-left: 0;
 }
 
 #components-layout-demo-side .logo {
@@ -883,7 +888,7 @@ td {
 }
 
 .content_product {
-  padding: 25px 100px 25px 50px;
+  padding: 25px;
 }
 
 .row_product {
@@ -1024,6 +1029,7 @@ footer {
 }
 
 .detail-product-id {
+  background-color: #e7e6e3;
   display: flex;
   justify-content: center;
 }
@@ -1104,3 +1110,108 @@ footer {
   font-weight: 500;
 }
 
+.row-products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 15px;
+}
+
+.row-products.in_page_products {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.column_product {
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.infor-banner {
+  display: flex;
+  align-items: center;
+  padding: 45px 15px;
+  border: 1px solid #fff;
+  margin-top: -50px;
+  background: #fff;
+  width: 300px;
+  height: 100px;
+  text-align: center;
+}
+
+.sort-option {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.category-aside {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.product-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.left-pages {
+  padding: 25px 30px 25px 15px;
+  width: 20%;
+  background-color: rgb(242, 242, 242);
+}
+
+.item-cate {
+  font-size: 20px;
+}
+.container-fluid.product-page {
+  padding-left: 0;
+}
+
+.content_product.pro-page {
+  max-width: 80%;
+}
+
+.item-cate {
+  margin: 5px 0;
+}
+
+.item-cate a {
+  font-size: 20px;
+  color: #000;
+  font-weight: 600;
+}
+
+.i4-products {
+  background: #252423;
+}
+
+.left-dt {
+  max-width: 70%;
+}
+.dt-image {
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+.right-dt {
+  max-width: 30%;
+  padding: 50px 30px
+}
+
+.item-btn-dt {
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  border: none;
+  border-collapse: collapse;
+}
+.item-btn-dt.mid-btn{
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+  text-align: center;
+}
