@@ -67,7 +67,9 @@ const ProductManage = (props: ProductManageProps) => {
 
   return (
     <div>
-      <Table columns={columns} dataSource={dataSource} />
+      <Table columns={columns} dataSource={dataSource} 
+          pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['10', '20', '30']}}
+      />
     </div>
   )
 }

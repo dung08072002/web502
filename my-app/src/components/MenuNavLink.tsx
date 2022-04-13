@@ -26,8 +26,7 @@ const MenuNavLink = (props: MenuNavLinkProps) => {
     }
     const onSubmit: SubmitHandler<TypeInput> = data => {
         localStorage.setItem("inputSearch", JSON.stringify(data))
-        // location.href =`/search?q=${data.q}`
-        navigate(`/search?searchText=${data.q}`)
+        navigate(`/search?q=${data.q}`)
     }
     return (
         <div>

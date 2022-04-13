@@ -96,6 +96,9 @@ function App() {
               <Route path=":slug" element={<DetailProduct />} />
               <Route path="category/:slug" element={<DetailCate />} />
             </Route>
+            <Route path="category">
+              <Route path=":slug" element={<DetailCate />} />
+            </Route>
             <Route path="signin" element={<Signin />} />
             <Route path="signup" element={<Signup />} />
             <Route path="search" element={<SearchPages />} />
@@ -103,18 +106,19 @@ function App() {
           </Route>
 
           <Route path="admin" element={<AdminLayout />}>
-            <Route index element={<Navigate to="dashboard" />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="products" >
-              <Route index element={<ProductManage category={categories} products={products} onRemove={removeItem} />} />
-              <Route path="add" element={<AddProduct category={categories} onAdd={onHandleAdd} />} />
-              <Route path=":slug/edit" element={<EditProduct category={categories} onUpdate={onHandleUpdate} />} />
-            </Route>
-            <Route path='categories'>
-              <Route index element={<CategoryManager category={categories} onRemoveCate={removeCate} />} />
-              <Route path='add' element={<AddCategory onAddCate={onHandleAddCate} />} />
-              <Route path=':slug/edit' element={<EditCategory onUpdateCate={onHanleUpdateCate} />} />
-            </Route>
+              <Route index element={<Navigate to="dashboard" />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="products" >
+                <Route index element={<ProductManage category={categories} products={products} onRemove={removeItem} />} />
+            
+                <Route path="add" element={ <AddProduct category={categories} onAdd={onHandleAdd} />} />
+                <Route path=":slug/edit" element={<EditProduct category={categories} onUpdate={onHandleUpdate} />} />
+              </Route>
+              <Route path='categories'>
+                <Route index element={<CategoryManager category={categories} onRemoveCate={removeCate} />} />
+                <Route path='add' element={<AddCategory onAddCate={onHandleAddCate} />} />
+                <Route path=':slug/edit' element={<EditCategory onUpdateCate={onHanleUpdateCate} />} />
+              </Route>
           </Route>
         </Routes>
       </main>

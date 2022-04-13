@@ -24,9 +24,9 @@ type TypeInput = {
 const EditProduct = (props: EditProductProps) => {
     const [selectedImage, setSelectedImage] = useState();
     const [image, setImage] = useState<string>('')
-    
+
     const imageLast = document.querySelector('#pic');
-    imageLast?.addEventListener('change', (e : any) => {
+    imageLast?.addEventListener('change', (e: any) => {
         setImage(URL.createObjectURL(e.target?.files[0]))
     })
 
@@ -49,10 +49,10 @@ const EditProduct = (props: EditProductProps) => {
     const onSubmit: SubmitHandler<TypeInput> = async (data) => {
         console.log(data);
         const file = data.image[0];
-        if(data.image == image){
+        if (data.image == image) {
             props.onUpdate(data);
         }
-        if(data.image != image){
+        if (data.image != image) {
             const formData = new FormData();
             formData.append("file", file);
             formData.append("upload_preset", CLOUDINARY_PRESET);
@@ -62,7 +62,7 @@ const EditProduct = (props: EditProductProps) => {
                     "Content-Type": "application/form-data",
                 }
             })
-            props.onUpdate({...data, image: res.data.url})
+            props.onUpdate({ ...data, image: res.data.url })
         }
         navigate('/admin/products');
     }
@@ -71,21 +71,25 @@ const EditProduct = (props: EditProductProps) => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">name product</label>
                 <input type="text" autoComplete='off' className='form-control' {...register('name', { required: true })} />
+                {errors.name && <span className='warning-err d-block text-uppercase'>name product cannot be blank</span>}
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">price product</label>
                 <input type="number" autoComplete='off' className='form-control' {...register('price', { required: true })} />
+                {errors.price && <span className='warning-err d-block text-uppercase'>price product cannot be blank</span>}
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">image product</label>
                 <input id='pic' type="file" accept='image/*' {...register('image')} className="app_uploadInput form-control" />
                 <div className='previewImage my-4'>
-                        <Image.PreviewGroup>
-                            <Image width={200} src={image} alt='thumb' />
-                        </Image.PreviewGroup>
+                    <Image.PreviewGroup>
+                        <Image width={200} src={image} alt='thumb' />
+                    </Image.PreviewGroup>
                 </div>
+                <textarea className='form-control' {...register('description', { required: true })}></textarea>
+                {errors.description && <span className='warning-err d-block text-uppercase'>description product cannot be blank</span>}
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">Select category</label>
                 <select className='form-control' {...register('category', { required: true })}>
-                    <option defaultValue={0} disabled selected className='text-uppercase'>SELECT CATEGORY</option>
+                    <option disabled className='text-uppercase'>SELECT CATEGORY</option>
                     {
-                        props.category.map(item => {
-                            return <option value={item._id}>{item.name}</option>
+                        props.category.map((item, index) => {
+                            return <option key={index} value={item._id}>{item.name}</option>
                         })
                     }
                 </select>

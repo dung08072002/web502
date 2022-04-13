@@ -9,7 +9,8 @@ import {
   TeamOutlined,
   InboxOutlined,
   BarsOutlined,
-  UserOutlined
+  UserOutlined,
+  HomeOutlined
 } from '@ant-design/icons';
 
 
@@ -44,6 +45,9 @@ const SidebarAdmin = () => {
           <SubMenu key="sub3" icon={<UserOutlined />} title="Users">
             <Menu.Item key="5"><NavLink to="/admin/user">List</NavLink></Menu.Item>
           </SubMenu>
+          <Menu.Item key="100" icon={<HomeOutlined />}>
+            <NavLink to="/">Home</NavLink>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">

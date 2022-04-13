@@ -17,7 +17,7 @@ export const read = (slug: string | undefined) => {
 }
 
 export const search = (input: string) =>{
-    const url = `/search?key=${input}`
+    const url = `/search?searchText=${input}`
     return instance.get(url);
 }
 

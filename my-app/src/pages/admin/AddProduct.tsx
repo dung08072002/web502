@@ -28,7 +28,7 @@ const AddProduct = (props: AddProductProps) => {
     const upload_preset = "lwllsryx";
     const { register, handleSubmit, formState: { errors } } = useForm<TypeInput>();
     const onSubmit: SubmitHandler<TypeInput> = data => {
-        const { files } : any = document.querySelector(".app_uploadInput");
+        const { files }: any = document.querySelector(".app_uploadInput");
         const formData = new FormData();
         formData.append("file", files[0]);
         formData.append("upload_preset", upload_preset);
@@ -52,11 +52,14 @@ const AddProduct = (props: AddProductProps) => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">name product</label>
                 <input type="text" autoComplete='off' className='form-control' {...register('name', { required: true })} />
+                {errors.name && <span className='warning-err d-block text-uppercase'>name product cannot be blank</span>}
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">price product</label>
                 <input type="number" autoComplete='off' className='form-control' {...register('price', { required: true })} />
+                {errors.price && <span className='warning-err d-block text-uppercase'>price product cannot be blank</span>}
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">image product</label>
                 <input type="file" accept='image/*'
-                    {...register('image')} className="app_uploadInput form-control" onChange={imageChange} />
+                    {...register('image', { required: true })} className="app_uploadInput form-control" onChange={imageChange} />
+                {errors.image && <span className='warning-err d-block text-uppercase'>image product cannot be blank</span>}
                 <div className='previewImage my-4'>
                     {selectedImage && (
                         <Image.PreviewGroup>
@@ -65,16 +68,18 @@ const AddProduct = (props: AddProductProps) => {
                     )}
                 </div>
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">description product</label>
-                <textarea className='form-control' {...register('description')}></textarea>
+                <textarea className='form-control' {...register('description', { required: true })}></textarea>
+                {errors.description && <span className='warning-err d-block text-uppercase'>description product cannot be blank</span>}
                 <label className='item-form form-label text-uppercase fw-bold' htmlFor="">Select category</label>
-                <select className='form-control' {...register('category', { required: true })}>
-                    <option defaultValue={0} disabled selected className='text-uppercase'>SELECT CATEGORY</option>
+                <select className='form-control' defaultValue={''} {...register('category', { required: true })}>
+                    <option selected value={''} disabled className='text-uppercase'>SELECT CATEGORY</option>
                     {
-                        props.category.map(item => {
-                            return <option value={item._id}>{item.name}</option>
+                        props.category.map((item, index) => {
+                            return <option key={index} value={item._id}>{item.name}</option>
                         })
                     }
                 </select>
+                {errors.category && <span className='warning-err d-block text-uppercase'>category cannot be blank</span>}
                 <button className='item-form btn btn-primary my-4 text-uppercase'>Add product</button>
             </form>
         </div>

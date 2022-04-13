@@ -9,31 +9,39 @@ type SearchPageProps = {
 
 const SearchPage = (props: SearchPageProps) => {
   useParams()
-  const [products, setProducts] = useState<IProduct[]>([])
-  const { q } = JSON.parse(localStorage.getItem('inputSearch') as string)
+  const [productResult, setProductResult] = useState<IProduct[]>([])
+  const { q } = JSON.parse(localStorage.getItem('inputSearch') as any)
   useEffect(() => {
     const getProduct = async () => {
       const { data } = await search(q);
-      setProducts(data)
+      setProductResult(data)
     }
     getProduct()
   }, [q])
   return (
-    <div>
-        <p>Có {products.length} kết quả tìm kiếm cho từ khóa {q}</p>
-        {products.map((item, index) => {
+    <div className='container-fluid'>
+      <div className='content_product bg-white'>
+        <p className='text-uppercase fw-bold fs-3 d-block'>Have {productResult.length} search results for keyword "{q}"</p>
+        <div className="row-products">
+          {productResult.map((item, index) => {
             return (
-                <div className='' key={index + 1}>
-                    <div className='product'>
-                        <Link to={`/products/${item.slug}`}/>
-                        <img src={item.image} alt="" />
-                        <Link to={`/products/${item.slug}`}>{item.name}</Link>
-                        <p>{item.price}</p>
-                    </div>
+              <div className='column_product' key={index + 1}>
+                <div className="img-product">
+                  <Link to={`/product/${item.slug}`}>
+                    <img src={item.image} alt="" className='img-fluid' />
+                  </Link>
                 </div>
+                <div className="details-product dt_pr_1">
+                  <span className="dis_block product-name">{item.name}</span>
+                  <span className="dis_block product-price">${item.price}.00</span>
+                  <Link to={`/product/${item.slug}`} className="add-to-cart">view detail</Link>
+                </div>
+              </div>
             )
-        })
-        }
+          })
+          }
+        </div>
+      </div>
     </div>
   )
 }
